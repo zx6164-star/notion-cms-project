@@ -1,30 +1,63 @@
-# Vanilla Starter Kit
+# DevLog — Notion CMS 블로그 프로젝트
 
-빠르게 웹 프로젝트를 시작하기 위한 Vanilla JS + Tailwind CSS 템플릿.
+Notion을 CMS로 활용한 개인 개발 블로그. Next.js 15 App Router + TypeScript + Tailwind CSS.
+
+## 프로젝트 문서
+
+@docs/PRD.md
+@docs/ROADMAP.md
 
 ## 기술 스택
-- HTML5 / CSS3 / JavaScript ES6+
-- Tailwind CSS (CDN)
-- LocalStorage (데이터 저장)
+- **Frontend**: Next.js 15 (App Router), TypeScript
+- **CMS**: Notion API (`@notionhq/client`)
+- **Styling**: Tailwind CSS, shadcn/ui
+- **Icons**: Lucide React
+- **Deployment**: Vercel
 
 ## 파일 구조
-- `index.html` — 진입점, Tailwind CDN 연결
-- `css/styles.css` — 공통 컴포넌트 스타일 (카드, 버튼, 입력 필드, 배지)
-- `js/app.js` — Storage 유틸, DOM 유틸, 앱 초기화
+```
+notion-cms-project/
+├── app/
+│   ├── page.tsx              # 홈 (글 목록)
+│   ├── posts/[id]/page.tsx   # 글 상세
+│   ├── category/[name]/page.tsx
+│   └── about/page.tsx
+├── components/
+│   ├── PostCard.tsx          # 글 카드
+│   ├── PostBody.tsx          # 블록 렌더러
+│   ├── CategoryFilter.tsx    # 카테고리 필터
+│   └── Header.tsx
+├── lib/
+│   └── notion.ts             # Notion API 유틸
+├── types/
+│   └── notion.ts             # 타입 정의
+├── .env.local                # NOTION_TOKEN, NOTION_DATABASE_ID
+└── docs/
+    ├── PRD.md
+    └── ROADMAP.md
+```
 
-## 공통 유틸 (js/app.js)
-- `Storage.get/set/remove()` — LocalStorage 래퍼
-- `$(selector)` / `$$(selector)` — querySelector 단축
-- `createElement(tag, class, html)` — 요소 생성 헬퍼
-- `createId()` — 고유 ID 생성
-- `formatDate(iso)` — 한국어 날짜 포맷
+## 환경 변수
+```
+NOTION_TOKEN=secret_xxxxxxxxxxxx
+NOTION_DATABASE_ID=xxxxxxxxxxxx
+```
 
-## 공통 CSS 클래스 (css/styles.css)
-- `.card` — 흰색 그림자 카드
-- `.btn`, `.btn-primary`, `.btn-secondary`, `.btn-danger` — 버튼
-- `.input` — 스타일된 입력 필드
-- `.badge-blue/green/red/yellow` — 상태 배지
-- `.fade-in-up`, `.fade-in` — 애니메이션
+## Notion DB 스키마 (Posts)
+| 필드 | 타입 | 설명 |
+|------|------|------|
+| Title | title | 글 제목 |
+| Category | select | HTML/CSS, JavaScript, React, 기타 |
+| Tags | multi_select | 태그 목록 |
+| Published | date | 발행일 |
+| Status | select | 초안 / 발행됨 |
+| Thumbnail | files | 썸네일 |
+| Summary | rich_text | 요약 (2~3줄) |
 
-## 실행 방법
-index.html을 브라우저로 열거나 Live Server 사용.
+## 주요 API 함수 (lib/notion.ts)
+- `getPosts()` — Status=발행됨 글 목록 조회
+- `getPostById(id)` — 개별 글 조회
+- `getBlocks(pageId)` — 페이지 블록 조회
+
+## 개발 순서
+Phase 1 (골격) → Phase 2 (공통 모듈) → Phase 3 (핵심 기능) → Phase 4 (추가 기능) → Phase 5 (배포)
