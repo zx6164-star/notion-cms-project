@@ -67,6 +67,28 @@ export const mockPosts: Post[] = [
     summary: 'Claude Code CLI를 활용해서 개발 속도를 극적으로 높이는 팁과 워크플로우를 공유합니다.',
     slug: 'claude-code-productivity',
   },
+  {
+    id: '7',
+    title: 'Vercel Edge Functions 파헤치기',
+    category: 'JavaScript',
+    tags: ['Vercel', 'Edge'],
+    published: '',
+    status: '초안',
+    thumbnail: '',
+    summary: '아직 작성 중인 글입니다.',
+    slug: 'vercel-edge-functions',
+  },
+  {
+    id: '8',
+    title: 'GraphQL vs REST 실전 비교',
+    category: 'JavaScript',
+    tags: ['GraphQL', 'REST'],
+    published: '',
+    status: '초안',
+    thumbnail: '',
+    summary: '아직 작성 중인 글입니다.',
+    slug: 'graphql-vs-rest',
+  },
 ]
 
 export const mockBlocks: Record<string, Block[]> = {
