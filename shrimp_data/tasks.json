@@ -1,0 +1,167 @@
+[
+  {
+    "id": "task-001",
+    "name": "Next.js 15 프로젝트 생성 및 초기 설정",
+    "description": "Next.js 15 App Router + TypeScript 프로젝트를 생성하고 Tailwind CSS, shadcn/ui를 설정합니다.",
+    "notes": "Phase 1 - 골격 구축. 기반 없이 기능 개발 금지.",
+    "status": "pending",
+    "dependencies": [],
+    "createdAt": "2026-07-31T00:00:00.000Z",
+    "updatedAt": "2026-07-31T00:00:00.000Z",
+    "tags": ["phase1", "setup"]
+  },
+  {
+    "id": "task-002",
+    "name": "환경 변수 및 Notion API 연동 환경 구축",
+    "description": ".env.local 파일에 NOTION_TOKEN, NOTION_DATABASE_ID 설정. Notion API 키 발급 및 연결 확인.",
+    "notes": "Phase 1 - npm run dev 정상 실행 후 환경 변수 로드 확인 필요.",
+    "status": "pending",
+    "dependencies": ["task-001"],
+    "createdAt": "2026-07-31T00:00:00.000Z",
+    "updatedAt": "2026-07-31T00:00:00.000Z",
+    "tags": ["phase1", "api"]
+  },
+  {
+    "id": "task-003",
+    "name": "프로젝트 디렉토리 구조 및 기본 레이아웃 설정",
+    "description": "app/, components/, lib/, types/ 디렉토리 구조 확정. app/layout.tsx에 Header, Footer 배치.",
+    "notes": "Phase 1 - Vercel 프로젝트 연결 포함.",
+    "status": "pending",
+    "dependencies": ["task-001"],
+    "createdAt": "2026-07-31T00:00:00.000Z",
+    "updatedAt": "2026-07-31T00:00:00.000Z",
+    "tags": ["phase1", "layout"]
+  },
+  {
+    "id": "task-004",
+    "name": "TypeScript 타입 정의 (types/notion.ts)",
+    "description": "Post, Block, Category 타입 정의. Notion API 응답 구조에 맞는 타입 작성.",
+    "notes": "Phase 2 - 공통 모듈. 모든 컴포넌트가 이 타입을 사용함.",
+    "status": "pending",
+    "dependencies": ["task-002", "task-003"],
+    "createdAt": "2026-07-31T00:00:00.000Z",
+    "updatedAt": "2026-07-31T00:00:00.000Z",
+    "tags": ["phase2", "types"]
+  },
+  {
+    "id": "task-005",
+    "name": "Notion API 유틸 함수 개발 (lib/notion.ts)",
+    "description": "getPosts(), getPostById(id), getBlocks(pageId) 함수 구현. 카테고리 필터 파라미터 지원.",
+    "notes": "Phase 2 - 공통 모듈. 모든 페이지가 이 함수를 재사용.",
+    "status": "pending",
+    "dependencies": ["task-004"],
+    "createdAt": "2026-07-31T00:00:00.000Z",
+    "updatedAt": "2026-07-31T00:00:00.000Z",
+    "tags": ["phase2", "api"]
+  },
+  {
+    "id": "task-006",
+    "name": "공통 레이아웃 컴포넌트 개발 (Header, Footer)",
+    "description": "Header.tsx (로고 + 카테고리 네비 + 검색 아이콘), Footer.tsx 컴포넌트 구현.",
+    "notes": "Phase 2 - 공통 모듈. app/layout.tsx에서 사용.",
+    "status": "pending",
+    "dependencies": ["task-004"],
+    "createdAt": "2026-07-31T00:00:00.000Z",
+    "updatedAt": "2026-07-31T00:00:00.000Z",
+    "tags": ["phase2", "component"]
+  },
+  {
+    "id": "task-007",
+    "name": "공통 UI 컴포넌트 개발 (PostCard, CategoryBadge, TagList)",
+    "description": "PostCard.tsx (썸네일+제목+요약+날짜+카테고리), CategoryBadge.tsx, TagList.tsx 구현.",
+    "notes": "Phase 2 - 공통 모듈. 목록/카테고리 페이지에서 재사용.",
+    "status": "pending",
+    "dependencies": ["task-004"],
+    "createdAt": "2026-07-31T00:00:00.000Z",
+    "updatedAt": "2026-07-31T00:00:00.000Z",
+    "tags": ["phase2", "component"]
+  },
+  {
+    "id": "task-008",
+    "name": "홈 - 글 목록 페이지 구현 (app/page.tsx)",
+    "description": "getPosts() 호출 → PostCard 그리드 렌더링. 최신순 정렬, 로딩 스켈레톤 UI.",
+    "notes": "Phase 3 - 핵심 기능. Phase 2 공통 모듈 완성 후 시작.",
+    "status": "pending",
+    "dependencies": ["task-005", "task-006", "task-007"],
+    "createdAt": "2026-07-31T00:00:00.000Z",
+    "updatedAt": "2026-07-31T00:00:00.000Z",
+    "tags": ["phase3", "feature"]
+  },
+  {
+    "id": "task-009",
+    "name": "글 상세 페이지 구현 (app/posts/[id]/page.tsx)",
+    "description": "getPostById + getBlocks 호출. PostBody.tsx 블록 렌더러 구현 (paragraph, heading, code, image, quote, list). 이전/다음 글 네비게이션.",
+    "notes": "Phase 3 - 핵심 기능.",
+    "status": "pending",
+    "dependencies": ["task-005", "task-007"],
+    "createdAt": "2026-07-31T00:00:00.000Z",
+    "updatedAt": "2026-07-31T00:00:00.000Z",
+    "tags": ["phase3", "feature"]
+  },
+  {
+    "id": "task-010",
+    "name": "반응형 디자인 적용",
+    "description": "모바일(375px), 태블릿(768px), 데스크톱(1280px) 대응. next/image로 이미지 최적화.",
+    "notes": "Phase 3 - 핵심 기능.",
+    "status": "pending",
+    "dependencies": ["task-008", "task-009"],
+    "createdAt": "2026-07-31T00:00:00.000Z",
+    "updatedAt": "2026-07-31T00:00:00.000Z",
+    "tags": ["phase3", "responsive"]
+  },
+  {
+    "id": "task-011",
+    "name": "카테고리 필터 및 페이지 구현 (app/category/[name])",
+    "description": "CategoryFilter.tsx 버튼 그룹. URL 파라미터로 카테고리 필터링.",
+    "notes": "Phase 4 - 추가 기능. 핵심 기능 완성 후 시작.",
+    "status": "pending",
+    "dependencies": ["task-008"],
+    "createdAt": "2026-07-31T00:00:00.000Z",
+    "updatedAt": "2026-07-31T00:00:00.000Z",
+    "tags": ["phase4", "feature"]
+  },
+  {
+    "id": "task-012",
+    "name": "검색 기능 구현",
+    "description": "제목·태그 기준 클라이언트 사이드 검색. 검색 결과 하이라이팅.",
+    "notes": "Phase 4 - 추가 기능.",
+    "status": "pending",
+    "dependencies": ["task-008"],
+    "createdAt": "2026-07-31T00:00:00.000Z",
+    "updatedAt": "2026-07-31T00:00:00.000Z",
+    "tags": ["phase4", "feature"]
+  },
+  {
+    "id": "task-013",
+    "name": "SEO 최적화 (메타태그, OG이미지, sitemap)",
+    "description": "generateMetadata() 페이지별 메타 태그. OG 이미지 설정. sitemap.xml 자동 생성.",
+    "notes": "Phase 4 - 추가 기능. Lighthouse SEO 90점 이상 목표.",
+    "status": "pending",
+    "dependencies": ["task-008", "task-009"],
+    "createdAt": "2026-07-31T00:00:00.000Z",
+    "updatedAt": "2026-07-31T00:00:00.000Z",
+    "tags": ["phase4", "seo"]
+  },
+  {
+    "id": "task-014",
+    "name": "성능 최적화 (ISR, 이미지, 폰트)",
+    "description": "ISR revalidate: 60 적용. 이미지 lazy loading. next/font 폰트 최적화.",
+    "notes": "Phase 5 - 최적화. 기능 확정 후 최적화.",
+    "status": "pending",
+    "dependencies": ["task-010", "task-011", "task-012"],
+    "createdAt": "2026-07-31T00:00:00.000Z",
+    "updatedAt": "2026-07-31T00:00:00.000Z",
+    "tags": ["phase5", "performance"]
+  },
+  {
+    "id": "task-015",
+    "name": "Vercel 배포 및 환경 변수 설정",
+    "description": "Vercel 대시보드에 환경 변수 등록. 프로덕션 배포. 커스텀 도메인 연결(선택).",
+    "notes": "Phase 5 - 배포. Lighthouse 성능 90점 이상, 로딩 1초 이내 목표.",
+    "status": "pending",
+    "dependencies": ["task-014"],
+    "createdAt": "2026-07-31T00:00:00.000Z",
+    "updatedAt": "2026-07-31T00:00:00.000Z",
+    "tags": ["phase5", "deploy"]
+  }
+]
