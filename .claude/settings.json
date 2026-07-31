@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git status)",
+      "Bash(git log *)",
+      "Bash(python -m http.server *)"
+    ],
+    "deny": [
+      "Bash(rm -rf *)",
+      "Bash(git push --force *)",
+      "Read(./.env)",
+      "Read(./.env.*)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"const d=require('fs').readFileSync('/dev/stdin','utf8');const i=JSON.parse(d);const cmd=(i.tool_input||{}).command||'';const banned=['rm -rf','git push --force','DROP TABLE','format c:'];const found=banned.find(b=>cmd.includes(b));if(found){process.stderr.write('\\u26a0\\ufe0f 위험한 명령어 차단: '+found+'\\n');process.exit(2);}\" 2>&1 || true"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"const d=require('fs').readFileSync('/dev/stdin','utf8');const i=JSON.parse(d);const f=(i.tool_input||{}).file_path||'';if(f){const line=new Date().toISOString().slice(0,19)+' EDITED '+f+'\\n';require('fs').appendFileSync('.claude/edit-log.txt',line);}\" 2>/dev/null || true"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo \"\u2705 Claude Code 작업 완료!\""
+          }
+        ]
+      }
+    ]
+  }
+}
