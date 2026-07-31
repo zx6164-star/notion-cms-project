@@ -5,3 +5,18 @@ desktop.ini
 *.tmp
 .vscode/
 .idea/
+
+# Next.js
+node_modules/
+.next/
+out/
+build/
+next-env.d.ts
+
+# 환경 변수 (비밀 키 보호)
+.env
+.env.local
+.env*.local
+
+# Vercel
+.vercel/
